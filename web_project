@@ -1,0 +1,17 @@
+新建目录，通过shell，至该新建目录下，执行：python -m venv ll_env  （venv 模块 创建 名为ll_env 虚拟环境）
+
+执行source ll_env/bin/activate 激活虚拟环境，windows系统不用加source 直接输入 ll_env/bin/activate 即可， PowerShell需要将activate中a大写，Activate，要停止即用deactivate即可
+
+在虚拟环境中安装Django，首先更新pip，命令：pip install --upgrade pip，然后安装Django：pip install django
+
+新建项目，（django-admin startproject ll_project .）包含‘.’，然后windows执行dir，linux执行ls
+
+创建数据库，python manage.py migrate
+
+查看项目，python manage.py runserver，然后到浏览器中查看网页，http://127.0.0.1:8000/   (如果出现错误消息“That port is already in use”（指定端⼝被占⽤），python manage.py runserver 8001，增大号码直到成功为止）
+
+创建应用程序，之前打开的shell运行runserver，新打开一个shell激活虚拟环境，执行python manage.py startapp learning_logs
+
+定义模型，models.py ,激活模型 ll_project 中 settings.py中 INSTALLED_APPS 列表 将应用程序添加进去 
+
+让django 修改数据库，可以存储models.py定义的模型，python manage.py makemigrations learning_logs，应用迁移，让django为我们修改，python manage.py migrate。每当需要修改“学习笔记”管理的数据时，都采取如下三个步骤：修改models.py，对learning_logs 调⽤makemigrations，以及让Django迁移项⽬
