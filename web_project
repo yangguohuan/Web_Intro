@@ -19,3 +19,5 @@
 每当需要修改“学习笔记”管理的数据时，都采取如下三个步骤：修改models.py，对learning_logs 调⽤makemigrations，以及让Django迁移项⽬
 
 设置管理网站, python migrate.py createsuperuser,注册类，在admin.py中注册类，admin.site.register()
+
+重新映射，设置网站首页，定义urls.py，(from django.urls import path)  (from . import views)，定义views.py，建立文件夹templates，在templates里新建一个以应用程序名命名的文件夹，里面新建index.html
