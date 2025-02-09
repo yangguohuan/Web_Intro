@@ -14,4 +14,8 @@
 
 定义模型，models.py ,激活模型 ll_project 中 settings.py中 INSTALLED_APPS 列表 将应用程序添加进去 
 
-让django 修改数据库，可以存储models.py定义的模型，python manage.py makemigrations learning_logs，应用迁移，让django为我们修改，python manage.py migrate。每当需要修改“学习笔记”管理的数据时，都采取如下三个步骤：修改models.py，对learning_logs 调⽤makemigrations，以及让Django迁移项⽬
+让django 修改数据库，可以存储models.py定义的模型，python manage.py makemigrations learning_logs，
+应用迁移，让django为我们修改，python manage.py migrate。
+每当需要修改“学习笔记”管理的数据时，都采取如下三个步骤：修改models.py，对learning_logs 调⽤makemigrations，以及让Django迁移项⽬
+
+设置管理网站, python migrate.py createsuperuser,注册类，在admin.py中注册类，admin.site.register()
