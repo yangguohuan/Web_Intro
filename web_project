@@ -21,3 +21,5 @@
 设置管理网站, python migrate.py createsuperuser,注册类，在admin.py中注册类，admin.site.register()
 
 重新映射，设置网站首页，定义urls.py，(from django.urls import path)  (from . import views)，定义views.py，建立文件夹templates，在templates里新建一个以应用程序名命名的文件夹，里面新建index.html
+
+使⽤Django 创建⽹⻚的过程分为三个阶段：定义URL，编写视图，以及编写模板。
