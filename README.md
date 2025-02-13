@@ -8,3 +8,5 @@ python manage.py startapp xxx
 python manage.py createsuperuser
 python manage.py makemigrations xxx
 python manage.py migrate
+python manage.py runserver
+python manage.py shell
