@@ -1,0 +1,322 @@
+在项目同名文件夹下新建 views.py
+
+1.  views.py先导入 from django.http import HttpResponse
+
+2. from django.shortcuts import render  (直接用)
+
+命名规范 def xxx_view(request): 
+
+路由配置 - path
+· path()函数
+· 导入 - from django. urls import path
+· 语法-path(route, views, name= None)
+· 参数:
+1. route：字符串类型，匹配的请求路径
+2. views：指定路径所对应的视图处理函数的名称 ✗
+3. name：为地址起别名，在模板中地址反向解析时使用
+
+路由配置 -path -转换器
+· path转换器
+· 语法：<转换器类型：自定义名>
+· 作用：若转换器类型匹配到对应类型的数据，则将数据按照关键字传参的方式传递给视图函数
+· 例子: path(' page/< int: page>', views. xxx)
+str、 int、 slug( 类似  this-is-django ) 、     path （比如 etc/sdg/dfd）
+
+
+re_path() 函数，要提前导入
+在url的匹配过程中可以使用正则表达式进行精确匹配，语法re_path(reg, view, name=xxx)
+正则表达式为命名分组模式（?P<name>pattern）；匹配提取参数后用关键字传参方式传递给视图函数
+re_path(r'^str(?P<name>pattern)/(?P<name>pattern)/(?P<name>pattern)$')
+
+
+
+
+
+
+
+
+# Django中的请求（续）
+
+- path_info: URL字符串
+- method: 字符串，表示HTTP请求方法，常用值：'GET'、'POST'
+- GET: QueryDict查询字典的对象，包含get请求方式的所有数据
+- POST: QueryDict查询字典的对象，包含post请求方式的所有数据
+- FILES: 类似于字典的对象，包含所有的上传文件信息
+
+
+
+
+
+
+
+
+# Django中的请求（续1）
+
+- COOKIES：Python字典，包含所有的cookie，键和值都为字符串
+- session：类似于字典的对象，表示当前的会话
+- body：字符串，请求体的内容(POST或PUT)
+- scheme：请求协议('http://'https')
+- request.get_full_path()：请求的完整路径
+- request.META：请求中的元数据(消息头)
+  - request.META['REMOTE_ADDR']：客户端IP地址
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. **HTTP响应状态行**:
+   - `HTTP/1.0 200 OK`：表示HTTP协议的版本是1.0，状态码是200，表示请求成功。
+
+2. **响应头**:
+   - `Date: Sat, 21 Mar 2020 09:44:15 GMT`：响应生成的日期和时间。
+   - `Server: WSGIServer/0.2 cpython/3.6.8`：服务器信息，使用的是WSGIServer，Python版本是3.6.8。
+   - `Content-Type: application/json`：响应内容的类型是JSON格式。
+   - `X-Frame-Options: SAMEORIGIN`：防止页面被嵌入到其他站点的框架中。
+   - `Content-Length: 217`：响应内容的长度是217字节。
+   - `Vary: Origin`：表示响应可能会根据请求的来源而变化。
+   - `Access-Control-Allow-Origin: *`：允许所有域名的请求访问该资源。
+
+3. **响应体**:
+   - `["code": 200, "username": "guoxiaonao"]`：这是响应的主体内容，表示返回了一个JSON对象，其中包含状态码200和用户名"guoxiaonao"。
+
+这个样例展示了一个典型的HTTP响应，包含了状态行、响应头和响应体。
+
+# 响应样例
+
+HTTP/1.0 200 OK  
+Date: Sat, 21 Mar 2020 09:44:15 GMT  
+Server: WSGIServer/0.2 cpython/3.6.8  
+Content-Type: application/json  
+X-Frame-Options: SAMEORIGIN  
+Content-Length: 217  
+Vary: Origin  
+Access-Control-Allow-Origin: *  
+
+["code": 200, "username": "guoxiaonao"] -> body  
+
+---
+
+## 起始行
+-> headers
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Django中的响应对象
+
+构造函数格式：
+
+HttpResponse(content=响应体, content_type=响应体数据类型, status=状态码)
+
+作用：
+
+向客户端浏览器返回响应，同时携带响应体内容
+
+
+
+
+
+
+
+
+
+django 设计模式 MTV
+
+
+# 模板配置
+
+创建模板文件夹 <项目名>/templates
+
+在 settings.py 中 TEMPLATES 配置项
+
+1. BACKEND：指定模板的引擎  
+2. DIR$：模板的搜索目录(可以是一个或多个)  
+3. APP_DIRS：是否要在应用中的 templates 文件夹中搜索模板文件  
+4. OPTIONS：有关模板的选项  
+
+- **配置项中** 需要修改部分  
+  设置DIR$ - 'DIR$': [os.path.join(BASE_DIR, 'templates')],
+
+
+
+
+
+
+
+from django.shortcuts import render   
+
+return render(request, 'xxx.html', dic) dic必须是字典  
+
+模板中 {{变量名}} 调用视图传进来的变量
+
+
+
+
+ **模板过滤器**:
+   - **定义**: 在变量输出时对变量的值进行处理。
+   - **作用**: 可以通过使用过滤器来改变变量的输出显示。
+   - **语法**: `[变量 | 过滤器1: 参数值1 | 过滤器2: 参数值2' .]`    safe 内容安全 不转义
+   - **官方文档**: [Django模板过滤器文档](https://docs.djangoproject.com/en/2.2/ref/templates/builtins/)
+
+
+
+模板的继承，{% extends 'PATH' %}
+
+
+url 反向解析  path(route, views, name="别名")
+
+view中的反向解析 from django.urls improt reverse 
+reverse('别名', args=[], kwargs={})
+
+访问静态路径
+{% load static %}
+{% static '路径' %}
+
+
+
+
+# 应用下的模板
+
+应用内部可以配置模板目录
+
+1. 应用下手动创建 **templates** 文件夹  
+2. settings.py中 开启 应用模板功能  
+   ✓ TEMPLATE 配置项中的 'APP_DIRS' 值为 True 即可  
+
+应用下 **templates** 和 外层 **templates** 都存在时，django得查找模板规则  
+
+1. 优先查找外层 **templates** 目录下的模板  
+2. 按 **INSTALLED_APPS** 配置下的 应用顺序 逐层查找    嵌套文件夹重名文件
+
+
+
+
+
+# Django配置mysql
+
+- 安装 mysqlclient [版本 mysqlclient 1.3.13以上，官网目前为1.4.x]
+- 安装前确认ubuntu是否已安装 python3-dev 和 default-libmysqlclient-dev
+  1. sudo apt list --installed|grep -E 'libmysqlclient-dev|python3-dev'
+  2. 若命令无输出则需要安装 - sudo apt-get install python3-dev default-libmysqlclient-dev
+
+sudo pip3 freeze|grep -i 'mysql' 检查当前环境下mysql 安装了哪些库
+
+
+
+
+
+
+
+
+
+
+
+
+# Django配置mysql（续）
+
+- 创建数据库
+- 进入mysql数据库 执行  
+  ✓ create database 数据库名 default charset utf8  
+  ✓ 通常数据库名跟项目名保持一致  
+
+- settings.py里进行数据库的配置  
+  ✓ 修改DATABASES配置项的内容，由sqlite3变为mysql
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+改成：
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mysite3',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306'
+    }
+}
+
+
+
+
+
+
+
+ORM框架
+
+定义：ORM（Object Relational Mapping）即对象关系映射，它是一种程序技术，它允许你使用类和对象对数据库进行操作，从而避免通过SQL语句操作数据库。
+
+作用：
+1. 建立模型类和表之间的对应关系，允许我们通过面向对象的方式来操作数据库。
+2. 根据设计的模型类生成数据库中的表格。
+3. 通过简单的配置就可以进行数据库的切换。
+
+
+ORM框架（续）
+
+优点：
+- 只需要面向对象编程，不需要面向数据库编写代码。
+   对数据库的操作都转化成对类属性和方法的操作。
+   不用编写各种数据库的SQL语句。
+
+- 实现了数据模型与数据库的解耦，屏蔽了不同数据库操作上的差异。
+  √ 不在关注用的是mysql、oracle...等数据库的内部细节。
+  √ 通过简单的配置就可以轻松更换数据库，而不需要修改代码。
+
+缺点
+√ 对于复杂业务，使用成本较高
+√ 根据对象的操作转换成SQL语句，根据查询的结果转化成对象，在映射过程中有性能损失。
+
+
+
+
+
+
+
+
+3.数据库迁移
+- 移是Django同步您对模型所做更改（添加字段，删除模型等）到您的数据库模式的方式
+
+√ 生成迁移文件 - 执行 python3 manage.py makemigrations
+  应用下的models.py文件生成一个中间文件，并保存在migrations文件夹中
+
+√ 执行迁移脚本程序 - 行 python3 manage.py migrate
+  执行迁移程序实现迁移。将每个应用下的migrations目录中的中间文件同步回数据库
+
+
+
+
+
+
+
+
+
+
+
